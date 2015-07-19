@@ -34,7 +34,7 @@ func handleClient(conn *net.UDPConn, sb []byte) {
 	sec, microsec := gettimeofday()
 	vn := byteArrayToUint64(buf[0:][0:3]) & 0x38000000
 	copy(sb[0:3], uint64ToByteArray(0x040106F0|vn)) // flag
-	sb[4] = 0                                       // delay
+	copy(sb[4:7], []byte{0, 0, 0, 0})               //delay
 	copy(sb[8:11], uint64ToByteArray(0x00000010))   // dispersion
 	copy(sb[12:15], []byte("LOCL"))                 // Ref ID
 	copy(sb[16:19], uint64ToByteArray(sec+0x83AA7E80))
